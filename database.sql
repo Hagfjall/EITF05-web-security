@@ -3,6 +3,7 @@ CREATE TABLE `users` (
  `name` varchar(400) NOT NULL,
  `password` binary(64) NOT NULL,
  `salt` char(24) NOT NULL,
+ `address` varchar(300) NOT NULL,
  PRIMARY KEY (`email`),
  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1

@@ -20,6 +20,7 @@ foreach($names as $name) {
   $salt = base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM));
 
   $email = $name."@email.com";
+  $address = $name."gatan"." 13";
   $hash = hash_pbkdf2("sha512", $password, $salt, 10000, 512);
   print "<br>";
   print $name;
@@ -30,8 +31,9 @@ foreach($names as $name) {
   print "<br>";
   print strlen($salt);
   print "<br>";
+  print $address;
 
-  $sql = "Insert into users(email,name,password,salt) values('".$email."','".$name."','".$hash."','".$salt."')";
+  $sql = "Insert into users(email,name,address,password,salt) values('".$email."','".$name."','".$address."','".$hash."','".$salt."')";
   print $sql;
   mysqli_query($conn,$sql);
 }
