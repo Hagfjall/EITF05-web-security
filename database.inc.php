@@ -106,9 +106,9 @@ class Database
     public function authenticateUser($email, $password){
         $salt = $this->getSalt($email);
         $hash = hash_pbkdf2("sha512", $password, $salt, 10000, 0,false);
-        $sql = "SELECT * FROM users WHERE email = '$email' AND password = '$hash'";
-        $return = $this->executeUpdate($sql);
-        if ($return == 1){
+        $sql = "SELECT * FROM users WHERE `email` = ? AND `password` = ?";
+        $return = $this->executeQuery($sql, array($email, $hash));
+        if (sizeof($return) == 1){
             return true;
         } else {
             return false;
@@ -116,14 +116,13 @@ class Database
     }
 
     private function getSalt($email){
-        $sql = "SELECT salt FROM users WHERE email = '$email'";
-        $array = $this->executeQuery($sql);
+        $sql = "SELECT salt FROM users WHERE `email` = ?";
+        $array = $this->executeQuery($sql, array($email));
         foreach ($array as $value){
             $salt = $value;
         }
         return $salt;
     }
-
 
     public function getName($email)
     {
