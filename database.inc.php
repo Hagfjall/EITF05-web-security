@@ -1,15 +1,5 @@
 <?php
 
-/*
- * Class Database: interface to the movie database FROM PHP.
- *
- * You must:
- *
- * 1) Change the function userExists so the SQL query is appropriate for your tables.
- * 2) Write more functions.
- *
- */
-
 class Database
 {
     private $host;
