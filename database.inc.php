@@ -83,7 +83,7 @@ class Database
         try {
             $stmt = $this->conn->prepare($query);
             $stmt->execute($param);
-            $result = $stmt->fetchAll();
+            $result = $stmt->fetchAll(PDO::FETCH_COLUMN);
         } catch (PDOException $e) {
             $error = "*** Internal error: " . $e->getMessage() . "<p>" . $query;
             die($error);
@@ -100,7 +100,6 @@ class Database
      */
     private function executeUpdate($query, $param = null)
     {
-        // ...
         try {
             $stmt = $this->conn->prepare($query);
             $stmt->execute($param);
@@ -114,13 +113,27 @@ class Database
         return $result;
     }
 
-
-    public function getBlockedPallets()
-    {
-        $sql = $this->getAllPalletInfoQuery();
-        $sql = $sql . "WHERE blocked is true ORDER BY productionDateTime";
-        return $this->executeQuery($sql);
+    public function authenticateUser($email, $password){
+        $salt = $this->getSalt($email);
+        $hash = hash_pbkdf2("sha512", $password, $salt, 10000, 0,false);
+        $sql = "SELECT * FROM users WHERE email = '$email' AND password = '$hash'";
+        $return = $this->executeUpdate($sql);
+        if ($return == 1){
+            return true;
+        } else {
+            return false;
+        }
     }
+
+    private function getSalt($email){
+        $sql = "SELECT salt FROM users WHERE email = '$email'";
+        $array = $this->executeQuery($sql);
+        foreach ($array as $value){
+            $salt = $value;
+        }
+        return $salt;
+    }
+
 
     public function getName($email)
     {
