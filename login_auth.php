@@ -9,6 +9,7 @@
         $result = $database->authenticateUser($email, $password);
         if($result == true){
             print 'SUCCESS';
+            print "<br>Welcome ".$database->getName($email);
             
         } else {
             print 'FAIL';

@@ -127,7 +127,7 @@ class Database
     public function getName($email)
     {
         $sql = "SELECT name FROM users WHERE `email` = ? ";
-        return $this->executeQuery($sql,array($email));
+        return $this->executeQuery($sql,array($email))[0];
     }
 
 }
