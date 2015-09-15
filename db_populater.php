@@ -17,11 +17,11 @@ $names = array("user1","user2","user3","fredrik","anton","alex","axel","user4","
 
 foreach($names as $name) {
   $password = $name;
-  $salt = base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM));
+  $salt = mcrypt_create_iv(16, MCRYPT_DEV_URANDOM);
 
   $email = $name."@email.com";
   $address = $name."gatan"." 13";
-  $hash = hash_pbkdf2("sha512", $password, $salt, 10000, 512);
+  $hash = hash_pbkdf2("sha512", $password, $salt, 10000, 0,false);
   print "<br>";
   print $name;
   print "<br>";
@@ -29,12 +29,12 @@ foreach($names as $name) {
   print "<br>";
   print strlen($hash);
   print "<br>";
-  print strlen($salt);
+  print $hash;
   print "<br>";
   print $address;
-
+  print "<br>";
   $sql = "Insert into users(email,name,address,password,salt) values('".$email."','".$name."','".$address."','".$hash."','".$salt."')";
-  print $sql;
+  #print $sql;
   mysqli_query($conn,$sql);
 }
  $conn->close();

@@ -1,8 +1,8 @@
 CREATE TABLE `users` (
  `email` varchar(400) NOT NULL,
  `name` varchar(400) NOT NULL,
- `password` binary(64) NOT NULL,
- `salt` char(24) NOT NULL,
+ `password` char(128) NOT NULL,
+ `salt` binary(16) NOT NULL,
  `address` varchar(300) NOT NULL,
  PRIMARY KEY (`email`),
  UNIQUE KEY `email` (`email`)
