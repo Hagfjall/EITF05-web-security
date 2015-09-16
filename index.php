@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html>
-<body>
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
 
+<body>
 <form name="login_form" method="post" action="login_auth.php">
     Email:<br>
-    <input type="text" name="email">
+    <input type="text" name="email" class="input">
     <br>
     Password:<br>
     <input type="password" name="password">
-    <input type="submit" value="login">
+    <br>
+    <input type="submit" value="Login">
 </form>
-
 </body>
+
+
 </html>
