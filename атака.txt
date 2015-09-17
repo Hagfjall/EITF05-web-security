@@ -1,0 +1,20 @@
+SQL INJECTION:
+    requires: multi_query or something that allows multiple queries
+    use case: user tries to log in
+    end statement with:
+        -- or # 
+        depending on sql db (in our case #)
+
+    атака план:
+
+        legit    the injected query
+        v        v--------------------------------------v
+        harald'; CREATE TABLE lol (username VARCHAR(30));#
+              ^^                                         ^ ignore rest of query
+              escape
+
+XSS:
+    requires: user input somewhere. allow input to be executed.
+
+CSRF:
+    requires: russian hacker guy.
