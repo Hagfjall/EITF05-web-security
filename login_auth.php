@@ -1,13 +1,21 @@
 <?php
 require_once "database.inc.php";
+session_set_cookie_params(900, '/websec', 'localhost', false, true);
+session_start();
 $database = new Database('localhost', 'root', 'root', 'websecurity');
-
 $database->openConnection();
 if ($database->isConnected()) {
-    $email = $_POST[email];
-    $password = $_POST[password];
+    if(isset($_POST[email])){
+        $_SESSION['email'] = $_POST[email];
+        error_log('email:'. $_SESSION['email']);
+    }
+    $email = $_SESSION['email'];
+    $password = $_POST['password'];
+
     $result = $database->authenticateUser($email, $password);
-    if ($result == true) {
+    if ($result == true || $_SESSION['auth']) {
+        $_SESSION['auth'] = true;
+        session_regenerate_id();
         showShop();
     } else {
         print 'FAIL';
