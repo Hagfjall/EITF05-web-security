@@ -146,6 +146,14 @@ class Database
         $sql = "SELECT name FROM users WHERE `email` = ? ";
         return $this->executeQuery($sql, array($email))[0];
     }
+    public function emailUnique($email){
+        $sql = "SELECT email FROM users WHERE `email` = ?";
+        if(sizeof($this->executeQuery($sql, array($email))) == 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }
 

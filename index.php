@@ -10,11 +10,11 @@
     <input type="text" name="email" class="input">
     <br>
     Password:<br>
-    <input type="password" name="password">
+    <input type="password" name="password" class="input">
     <br>
     <input type="submit" value="Login">
 </form>
-<a href="signup.php">Sign up</a>
+<a href="signup_form.html">Sign up</a>
 </body>
 
 
