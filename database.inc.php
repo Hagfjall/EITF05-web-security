@@ -155,6 +155,18 @@ class Database
         }
     }
 
+    public function getAllUsers(){
+         $query = "SELECT email,name, address FROM users";
+         try {
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            $error = "*** Internal error: " . $e->getMessage() . "<p>" . $query;
+            die($error);
+        }
+    }
+
 }
 
 
