@@ -14,6 +14,7 @@
     <br>
     <input type="submit" value="Login">
 </form>
+<a href="signup.php">Sign up</a>
 </body>
 
 

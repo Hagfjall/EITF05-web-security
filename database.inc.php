@@ -113,7 +113,7 @@ class Database
         $hash = hash_pbkdf2("sha512", $password, $salt, $this->iterations, 0, false);
         $sql = "INSERT INTO users(email,name,address,password,salt) VALUES (?,?,?,?,?)";
 
-        print_r($this->executeUpdate($sql, array($email, $name, $address, $hash, $salt)));
+        return $this->executeUpdate($sql, array($email, $name, $address, $hash, $salt));
 
     }
 
