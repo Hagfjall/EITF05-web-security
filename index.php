@@ -9,7 +9,7 @@ require_once "database.inc.php";
 </head>
 
 <body>
-<form name="login_form" method="post" action="login_auth.php">
+<form name="login_form" method="post" action="shop.php">
     Email:<br>
     <input type="text" name="email" class="input">
     <br>
