@@ -155,7 +155,7 @@ class Database
 $db = new Database("localhost", "root", "root", "websecurity");
 $db->openConnection();
 if (!$db->isConnected()) {
-    echo 'noo!';
+    error_log("Couldn't connect to database...".now());
 }
 //$db->createUser("hagfjall@gmail.com", "freddan", "hagfjall", "Vildandsvägen");
 //        $result = $db->getName("axel@email.com");
