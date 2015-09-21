@@ -2,9 +2,8 @@
 require_once "database.inc.php";
 session_set_cookie_params(900, '/websec', 'localhost', false, true);
 session_start();
-$database = new Database('localhost', 'root', 'root', 'websecurity');
-$database->openConnection();
-if ($database->isConnected()) {
+//$db are from database.inc.php, already connected.
+if ($db->isConnected()) {
     if(isset($_POST[email])){
         $_SESSION['email'] = $_POST[email];
         error_log('email:'. $_SESSION['email']);
@@ -12,7 +11,7 @@ if ($database->isConnected()) {
     $email = $_SESSION['email'];
     $password = $_POST['password'];
 
-    $result = $database->authenticateUser($email, $password);
+    $result = $db->authenticateUser($email, $password);
     if ($result == true || $_SESSION['auth']) {
         $_SESSION['auth'] = true;
         session_regenerate_id();
@@ -24,14 +23,14 @@ if ($database->isConnected()) {
 } else {
     echo 'Connection to database failed';
 }
-$database->closeConnection();
+$db->closeConnection();
 
 
 function showShop()
 {
-    global $database, $email;
+    global $db, $email;
     print 'SUCCESS';
-    print "<br>Welcome " . $database->getName($email) . "!<br>";
+    print "<br>Welcome " . $db->getName($email) . "!<br>";
     print "Here are the current exploits you can buy from us (shhh!!)!<br>";
     print '<form action="checkout.php" method="post" action="checkout.php">';
     print '<input type="checkbox" name="items" value="value1" />MS15-100 Microsoft Windows Media Center MCL Vulnerability<br />

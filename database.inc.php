@@ -7,16 +7,20 @@ class Database
     private $password;
     private $database;
     private $conn;
+    private $iterations;
 
     /**
      * Constructs a database object for the specified user.
      */
+
+
     public function __construct($host, $userName, $password, $database)
     {
         $this->host = $host;
         $this->userName = $userName;
         $this->password = $password;
         $this->database = $database;
+        $this->iterations = 10000;
     }
 
     /**
@@ -103,22 +107,35 @@ class Database
         return $result;
     }
 
-    public function authenticateUser($email, $password){
+    public function createUser($email, $name, $password, $address)
+    {
+        $salt = mcrypt_create_iv(16, MCRYPT_DEV_URANDOM);
+        $hash = hash_pbkdf2("sha512", $password, $salt, $this->iterations, 0, false);
+        $sql = "INSERT INTO users(email,name,address,password,salt) VALUES (?,?,?,?,?)";
+
+        print_r($this->executeUpdate($sql, array($email, $name, $address, $hash, $salt)));
+
+    }
+
+
+    public function authenticateUser($email, $password)
+    {
         $salt = $this->getSalt($email);
-        $hash = hash_pbkdf2("sha512", $password, $salt, 10000, 0,false);
+        $hash = hash_pbkdf2("sha512", $password, $salt, $this->iterations, 0, false);
         $sql = "SELECT * FROM users WHERE `email` = ? AND `password` = ?";
         $return = $this->executeQuery($sql, array($email, $hash));
-        if (sizeof($return) == 1){
+        if (sizeof($return) == 1) {
             return true;
         } else {
             return false;
         }
     }
 
-    private function getSalt($email){
+    private function getSalt($email)
+    {
         $sql = "SELECT salt FROM users WHERE `email` = ?";
         $array = $this->executeQuery($sql, array($email));
-        foreach ($array as $value){
+        foreach ($array as $value) {
             $salt = $value;
         }
         return $salt;
@@ -127,19 +144,23 @@ class Database
     public function getName($email)
     {
         $sql = "SELECT name FROM users WHERE `email` = ? ";
-        return $this->executeQuery($sql,array($email))[0];
+        return $this->executeQuery($sql, array($email))[0];
     }
 
 }
 
+
+
 //EXAMPLE
-//        $db = new Database("localhost", "root", "root", "websecurity");
-//        $db->openConnection();
-//        if (!$db->isConnected()) {
-//            echo 'noo!';
-//        }
+$db = new Database("localhost", "root", "root", "websecurity");
+$db->openConnection();
+if (!$db->isConnected()) {
+    echo 'noo!';
+}
+//$db->createUser("hagfjall@gmail.com", "freddan", "hagfjall", "Vildandsvägen");
 //        $result = $db->getName("axel@email.com");
 //        foreach($result as $name){
 //            print $name['name'];
 //        }
+
 ?>
