@@ -167,6 +167,15 @@ class Database
         }
     }
 
+    public function getAllItemsInShop(){
+        return array("MS15-100 Microsoft Windows Media Center MCL Vulnerability",
+            "Windows Escalate UAC Protection Bypass (ScriptHost Vulnerability)",
+            "CMS Bolt File Upload Vulnerability",
+            "Mac OS X \"tpwn\" Privilege Escalation",
+            "Symantec Endpoint Protection Manager Authentication Bypass and Code Execution",
+            "Heroes of Might and Magic III .h3m Map file Buffer Overflow");
+    }
+
 }
 
 
