@@ -1,6 +1,5 @@
 <?php
 require_once "database.inc.php";
-session_start();
 ?>
 
 Shopping Cart <br>

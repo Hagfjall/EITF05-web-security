@@ -1,7 +1,5 @@
 <?php
 require_once "database.inc.php";
-session_set_cookie_params(900, '/websec', 'localhost', false, true);
-session_start();
 //$db are from database.inc.php, already connected.
 if ($db->isConnected()) {
     $email = $_POST[email];
@@ -19,10 +17,9 @@ if ($db->isConnected()) {
         } else {
             $email = $_SESSION['email'];
         }
-        session_regenerate_id();
         showShop();
     } else {
-        print 'FAIL';
+        header("Location: index.php");
         die();
     }
 

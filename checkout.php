@@ -1,6 +1,5 @@
 <?php
 require_once "database.inc.php";
-session_start();
 
 $count = 0;
 $items = $db->getAllItemsInShop();

@@ -186,6 +186,9 @@ $db->openConnection();
 if (!$db->isConnected()) {
     error_log("Couldn't connect to database...".now());
 }
+session_set_cookie_params(900, '/websec', 'localhost', false, true);
+session_start();
+session_regenerate_id();
 //$db->createUser("hagfjall@gmail.com", "freddan", "hagfjall", "Vildandsvägen");
 //        $result = $db->getName("axel@email.com");
 //        foreach($result as $name){
