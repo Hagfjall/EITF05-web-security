@@ -112,11 +112,17 @@ class Database
         $salt = mcrypt_create_iv(16, MCRYPT_DEV_URANDOM);
         $hash = hash_pbkdf2("sha512", $password, $salt, $this->iterations, 0, false);
         $sql = "INSERT INTO users(email,name,address,password,salt) VALUES (?,?,?,?,?)";
-
         return $this->executeUpdate($sql, array($email, $name, $address, $hash, $salt));
-
     }
 
+    public function createUser_unsafe($email, $name, $password, $address)
+    {
+        $salt = mcrypt_create_iv(16, MCRYPT_DEV_URANDOM);
+        $hash = hash_pbkdf2("sha512", $password, $salt, $this->iterations, 0, false);
+        $sql_unsafe = "INSERT INTO users(email,name,address,password,salt) VALUES
+ ('".$email."','".$name."','".$address."','".$hash."','".$salt."')";
+        return $this->conn->query($sql_unsafe);
+    }
 
     public function authenticateUser($email, $password)
     {
