@@ -14,7 +14,34 @@ SQL INJECTION:
               escape
 
 XSS:
-    requires: user input somewhere. allow input to be executed.
+    stored xss:
+        xss script is stored on target (vulnerable) server 
+
+        атака план:
+                
+            create account with name 'alert("all iz not well today")'
+
+    reflected:
+        trick user into doing something bad
+
+        атака план:
+            
+            exploit some sort of error in shopping_cart.php
+            - add xss code as a queryparam and don't encode it
+            - send malicious request url to some peasant
+            - wait as the server sees invalid product id
+            - jump in happiness as server sends template "couldn't find product: $VAR"
+            - and $VAR is set in php to xss code and is executed as javascript by
+                - incorrect use of innerHTML, or
+                - retarded use of eval, or
+                - insert hacker knowledge here
 
 CSRF:
-    requires: russian hacker guy.
+    
+    атака план:
+    
+        <img src="http://localhost/shopping_cart.do?add_exploit=metaspl0it&amount=100" 
+            width="0" height="0" border="0">
+    
+        <img src="http://localhost/checkout.do?action=pay-with-pal" 
+            width="0" height="0" border="0">
