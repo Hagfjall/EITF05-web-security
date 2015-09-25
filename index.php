@@ -25,6 +25,7 @@ All the users that bought amazing expl0itz from us!<br>
 <b>Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Address<br>
 </b><br>
 <?php
+
 $result = $db->getAllUsers();
 foreach ($result as $user) {
     print $user['email']."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";

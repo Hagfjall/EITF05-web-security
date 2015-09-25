@@ -187,7 +187,7 @@ class Database
 
 
 //EXAMPLE
-$db = new Database("localhost", "root", "root", "websecurity");
+$db = new Database(apache_getenv("mysql.host"), apache_getenv("mysql.user"), apache_getenv("mysql.password"), apache_getenv("mysql.database"));
 $db->openConnection();
 if (!$db->isConnected()) {
     error_log("Couldn't connect to database...".now());
