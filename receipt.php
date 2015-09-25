@@ -13,5 +13,6 @@ if($count == 0){
     die();
 }else {
     print 'Thank you for your purchase! Above is the receipt.<br>';
+    unset($_SESSION['shopping_cart']);
 }
 ?>
