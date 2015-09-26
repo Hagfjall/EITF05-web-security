@@ -4,12 +4,14 @@
 window.onload = function () {
 	// we don't care about browsers that don't support XHR
 	var xhr = new XMLHttpRequest()
-	xhr.open("GET", "/users.php")
+	xhr.open("GET", "users.php")
 	xhr.onreadystatechange = function () {
 		// also, we don't care if the request succeeded or not (200)
 		// because this is just a sham :>
-		if (xhr.readyState === 4)
+		if (xhr.readyState === 4) {
+			console.log(document.cookie)
 			setupUserList(JSON.parse(xhr.responseText))
+		}
 	}
 	xhr.send()
 
