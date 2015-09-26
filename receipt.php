@@ -15,6 +15,8 @@
 			    if (isset($_SESSION['shopping_cart'][$i])) {
 			    	$count += $_SESSION['shopping_cart'][$i];
 			        print $_SESSION['shopping_cart'][$i].' "'.$items[$i].'" <br>';
+
+			    	$_SESSION['shopping_cart'][$i] = 0;
 			    }
 			}
 			if($count == 0){
@@ -22,6 +24,7 @@
 			    die();
 			}else {
 			    print 'Thank you for your purchase! Above is the receipt.<br>';
+			    print 'Your shooping cart has been emptied!';
 			}
 		?>
 	</body>
