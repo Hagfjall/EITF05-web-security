@@ -9,7 +9,10 @@ Items:<br>
     $items = $db->getAllItemsInShop();
 for ($i = 0; $i < count($items); $i++) {
         if (isset($_SESSION['shopping_cart'][$i])) {
-            print 'You have '.$_SESSION['shopping_cart'][$i].' "'.$items[$i].'" <br>';
+        	$in_cart = $_SESSION['shopping_cart'][$i];
+        	if ($in_cart > 0) {
+            	print 'You have '.$in_cart.' "'.$items[$i].'" <br>';
+        	}
         }
     }
 ?>
