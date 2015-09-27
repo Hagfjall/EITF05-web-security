@@ -19,29 +19,62 @@ XSS:
 
         атака план:
                 
-            create account with name 'alert("all iz not well today")'
+            - write javascript attack
+            - store in on targeted (vulnerable) server
+            - all users who request that resource will execute it
+
+        examples:
+
+            - facebook status update (<script>all who see me are forfeit</script>)
+            - ebay product descriptions (this is actually true, I think)
+            - youtube video annotations (hey, would be fun, right?)
+
+       	protection:
+
+       		- always treat user data as hostile/malicious
+       		- always sanitize user data
+       		- only use innerHTML with user data if pro
+       		- never use eval
 
     reflected:
-        trick user into doing something bad
+        trick user into giving you the session
 
         атака план:
-            
-            exploit some sort of error in shopping_cart.php
-            - add xss code as a queryparam and don't encode it
-            - send malicious request url to some peasant
-            - wait as the server sees invalid product id
-            - jump in happiness as server sends template "couldn't find product: $VAR"
-            - and $VAR is set in php to xss code and is executed as javascript by
-                - incorrect use of innerHTML, or
-                - retarded use of eval, or
-                - insert hacker knowledge here
 
+        	- encode javascript attack in a link
+        	- give link to user
+        	- user clicks link
+        	- server returns vulnerable html
+        	- javascript attack executes in user's browser :(
+
+        examples:
+
+        	- search engine (google.com?q=<script>give me your account</script>)
+        	- reddit thread (reddit.com/r/<script src='/xss.js'></script>)
+
+        proection:
+
+        	- never echo user data directly
+        	- always sanitize user data
+        	- same as reflected
 CSRF:
-    
+    trick the user into doing something stupid
+
     атака план:
-    
-        <img src="http://localhost/shopping_cart.do?add_exploit=metaspl0it&amount=100" 
-            width="0" height="0" border="0">
-    
-        <img src="http://localhost/checkout.do?action=pay-with-pal" 
-            width="0" height="0" border="0">
+    	
+    	- find some vulnerable website (e.g localhost/websec)
+    	- distribute auto-executing snippets of code to users
+    	- exposed users will make requests to the targeted website
+
+    	examples:
+
+    		- bank transfer (bank.cc/transfer.php?amount=100&to=myaccounthaha)
+    		- tumblr worm (my.tumblr.com/post/new?title=lol&content=pwnd_by_hackistan)
+        	- spotify (spotify.com/account/delete)
+
+        protection:
+
+        	- check referrer/origin headers
+        	- use randomized tokens on all (dangerous) user actions
+        	- don't be vulnerable to XSS
+        	(- don't use sessions at all :D)
