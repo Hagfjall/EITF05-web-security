@@ -12,8 +12,6 @@ class Database
     /**
      * Constructs a database object for the specified user.
      */
-
-
     public function __construct($host, $userName, $password, $database)
     {
         $this->host = $host;
@@ -130,12 +128,29 @@ class Database
         $hash = hash_pbkdf2("sha512", $password, $salt, $this->iterations, 0, false);
         $sql = "SELECT * FROM users WHERE `email` = ? AND `password` = ?";
         $return = $this->executeQuery($sql, array($email, $hash));
+        echo json_encode($return);
         if (sizeof($return) == 1) {
             return true;
         } else {
             return false;
         }
     }
+
+    public function authenticateUser_unsafe($email, $password)
+    {
+        $salt = $this->getSalt($email);
+        $hash = hash_pbkdf2("sha512", $password, $salt, $this->iterations, 0, false);
+        $sql = "SELECT * FROM users WHERE `email` = '" .$email . "' AND `password` = '" . $hash . "'";
+        
+        $stmt = $this->conn->query($sql);
+        $return = $stmt->fetchAll();
+        if (sizeof($return) == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     private function getSalt($email)
     {
